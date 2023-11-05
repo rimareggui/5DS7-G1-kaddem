@@ -7,7 +7,9 @@ import tn.esprit.spring.khaddem.entities.Universite;
 import tn.esprit.spring.khaddem.repositories.DepartementRepository;
 import tn.esprit.spring.khaddem.repositories.UniversiteRepository;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DepartementServiceImpl implements IDepartementService{
@@ -27,19 +29,45 @@ public class DepartementServiceImpl implements IDepartementService{
     }
 
     @Override
-    public Departement updateDepartement(Departement d) {
-        departementRepository.save(d);
-        return d;
+    public Departement updateDepartement(Departement updatedDepartement) {
+        Optional<Departement> existingDepartement = departementRepository.findById(updatedDepartement.getIdDepartement());
+
+        if (existingDepartement.isPresent()) {
+            Departement departementToUpdate = existingDepartement.get();
+            // Perform necessary updates on the existing entity
+            departementToUpdate.setNomDepart(updatedDepartement.getNomDepart());
+            // Update other fields as needed
+
+            departementRepository.save(departementToUpdate);
+            return departementToUpdate;
+        } else {
+            // Handle the case when the entity is not found
+            // For instance, you can throw an exception or return null
+            return null;
+        }
     }
+
 
     @Override
     public Departement retrieveDepartement(Integer idDepart) {
-        return departementRepository.findById(idDepart).get();
+        Optional<Departement> departementOptional = departementRepository.findById(idDepart);
+        if (departementOptional.isPresent()) {
+            return departementOptional.get();
+        }
+        // Handle the case when the value is not present
+        return null; // Or throw an exception or handle the error accordingly
     }
+
 
     @Override
     public List<Departement> retrieveDepartementsByUniversite(Integer idUniversite) {
-        Universite universite = universiteRepository.findById(idUniversite).get();
-        return universite.getDepartements();
+        Optional<Universite> universiteOptional = universiteRepository.findById(idUniversite);
+        if (universiteOptional.isPresent()) {
+            Universite universite = universiteOptional.get();
+            return universite.getDepartements();
+        }
+        // Handle the case when the value is not present
+        return Collections.emptyList(); // Or throw an exception or handle the error accordingly
     }
+
 }

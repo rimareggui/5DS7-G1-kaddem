@@ -12,7 +12,9 @@ import tn.esprit.spring.khaddem.repositories.EtudiantRepository;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -38,15 +40,35 @@ public class EtudiantServiceImpl implements IEtudiantService{
     }
 
     @Override
-    public Etudiant updateEtudiant(Etudiant e) {
-        etudiantRepository.save(e);
-        return e;
+    public Etudiant updateEtudiant(Etudiant updatedEtudiant) {
+        Optional<Etudiant> existingEtudiant = etudiantRepository.findById(updatedEtudiant.getIdEtudiant());
+
+        if (existingEtudiant.isPresent()) {
+            Etudiant etudiantToUpdate = existingEtudiant.get();
+            // Perform necessary updates on the existing entity
+            etudiantToUpdate.setNomE(updatedEtudiant.getNomE());
+            // Update other fields as needed
+
+            etudiantRepository.save(etudiantToUpdate);
+            return etudiantToUpdate;
+        } else {
+            // Handle the case when the entity is not found
+            // For instance, you can throw an exception or return null
+            return null;
+        }
     }
+
 
     @Override
     public Etudiant retrieveEtudiant(Integer idEtudiant) {
-        return etudiantRepository.findById(idEtudiant).get();
+        Optional<Etudiant> etudiantOptional = etudiantRepository.findById(idEtudiant);
+        if (etudiantOptional.isPresent()) {
+            return etudiantOptional.orElse(null);
+        }
+        // Handle the case when the value is not present
+        return null; // Or throw an exception or handle the error accordingly
     }
+
 
     @Override
     public void removeEtudiant(Integer idEtudiant) {
@@ -55,11 +77,20 @@ public class EtudiantServiceImpl implements IEtudiantService{
 
     @Override
     public void assignEtudiantToDepartement(Integer etudiantId, Integer departementId) {
-        Etudiant e = etudiantRepository.findById(etudiantId).get();
-        Departement d= departementRepository.findById(departementId).get();
-        e.setDepartement(d);
-        etudiantRepository.save(e);
+        Optional<Etudiant> etudiantOptional = etudiantRepository.findById(etudiantId);
+        Optional<Departement> departementOptional = departementRepository.findById(departementId);
+
+        if (etudiantOptional.isPresent() && departementOptional.isPresent()) {
+            Etudiant e = etudiantOptional.get();
+            Departement d = departementOptional.get();
+            e.setDepartement(d);
+            etudiantRepository.save(e);
+        } else {
+            // Handle the case when the value is not present
+            // For instance, you can throw an exception or handle the error accordingly
+        }
     }
+
 
     @Override
     public List<Etudiant> findByDepartementIdDepartement(Integer idDepartement) {
@@ -104,9 +135,15 @@ public class EtudiantServiceImpl implements IEtudiantService{
 
     @Override
     public List<Etudiant> getEtudiantsByDepartement(Integer idDepartement) {
-        Departement departement=departementRepository.findById(idDepartement).get();
-        return departement.getEtudiants();
+        Optional<Departement> departementOptional = departementRepository.findById(idDepartement);
+        if (departementOptional.isPresent()) {
+            Departement departement = departementOptional.get();
+            return departement.getEtudiants();
+        }
+        // Handle the case when the value is not present
+        return Collections.emptyList(); // Or throw an exception or handle the error accordingly
     }
+
 
 
 }
