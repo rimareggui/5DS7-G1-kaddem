@@ -1,0 +1,27 @@
+version: "2.3.3"
+
+services:
+  mysqldb:
+    image: mysql:5.7
+    restart: unless-stopped
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: yes
+    ports:
+      - 3306:3306
+    volumes:
+      - db:/var/lib/mysql
+
+  achat-backend:
+    depends_on:
+      - mysqldb
+    image: rihabaljene/achat-1.0
+    restart: on-failure
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+    ports:
+      - 8089:8089
+    stdin_open: true
+    tty: true
+
+volumes:
+  db:
