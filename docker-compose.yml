@@ -11,10 +11,10 @@ services:
     volumes:
       - db:/var/lib/mysql
 
-  achat-backend:
+  khaddem-backend:
     depends_on:
       - mysqldb
-    image: rihabaljene/achat-1.0
+    image: rima1999/khaddem-4.0
     restart: on-failure
     environment:
       MYSQL_ROOT_PASSWORD: root_password
