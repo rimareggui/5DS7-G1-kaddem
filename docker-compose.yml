@@ -6,8 +6,6 @@ services:
     restart: unless-stopped
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: yes
-    ports:
-      - 3306:3306
     volumes:
       - db:/var/lib/mysql
 
@@ -17,9 +15,10 @@ services:
     image: rima1999/khaddem-4.0
     restart: on-failure
     environment:
-      MYSQL_ROOT_PASSWORD: root_password
+      spring.datasource.username: root
+      spring.datasource.url: "jdbc:mysql://mysqldb:3306/khaddemApp?useUnicode=true&createDatabaseIfNotExist=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"
     ports:
-      - 8089:8089
+      - 8088:8089
     stdin_open: true
     tty: true
 
