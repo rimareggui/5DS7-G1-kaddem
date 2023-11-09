@@ -1,8 +1,7 @@
 package tn.esprit.spring.khaddem.services;
 
-import lombok.AllArgsConstructor;
+
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tn.esprit.spring.khaddem.entities.*;
 import tn.esprit.spring.khaddem.repositories.*;
@@ -118,8 +117,8 @@ public class EtudiantServiceImpl implements IEtudiantService{
 
     @Transactional
     public Etudiant addAndAssignEtudiantToEquipeAndContract(Etudiant e, Integer idContrat, Integer idEquipe) {
-        Contrat contrat = contratRepository.findById(idContrat).get();
-        Equipe equipe=equipeRepository.findById(idEquipe).get();
+        Contrat contrat = contratRepository.findById(idContrat).orElse(null);
+        Equipe equipe=equipeRepository.findById(idEquipe).orElse(null);
         Etudiant etudiant= etudiantRepository.save(e);
         log.info("contrat: "+contrat.getSpecialite());
         log.info("equipe: "+equipe.getNomEquipe());

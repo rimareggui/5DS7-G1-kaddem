@@ -1,6 +1,6 @@
 package tn.esprit.spring.khaddem.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.spring.khaddem.entities.Etudiant;
 import tn.esprit.spring.khaddem.entities.Niveau;
@@ -11,10 +11,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/etudiant")
-
+@AllArgsConstructor
 public class EtudiantRestController {
 
-    @Autowired
+
     IEtudiantService etudiantService;
     // http://localhost:8089/Kaddem/etudiant/retrieve-all-etudiants
     @GetMapping("/retrieve-all-etudiants")
