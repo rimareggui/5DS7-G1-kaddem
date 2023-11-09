@@ -1,6 +1,7 @@
 package tn.esprit.spring.khaddem.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import tn.esprit.spring.khaddem.entities.Departement;
 import tn.esprit.spring.khaddem.entities.Universite;
@@ -12,11 +13,12 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class DepartementServiceImpl implements IDepartementService{
-    @Autowired
-    DepartementRepository departementRepository;
-    @Autowired
-    UniversiteRepository universiteRepository;
+
+      DepartementRepository departementRepository;
+     UniversiteRepository universiteRepository;
+
     @Override
     public List<Departement> retrieveAllDepartements() {
         return departementRepository.findAll();
@@ -29,9 +31,10 @@ public class DepartementServiceImpl implements IDepartementService{
     }
 
     @Override
-    public Departement updateDepartement(Departement d) {
-        departementRepository.save(d);
-        return d;
+    public Departement updateDepartement(Departement dep) {
+
+         departementRepository.save(dep);
+         return dep ;
     }
 
 

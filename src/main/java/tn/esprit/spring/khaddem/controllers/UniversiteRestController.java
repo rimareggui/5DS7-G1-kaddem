@@ -3,7 +3,7 @@ package tn.esprit.spring.khaddem.controllers;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.spring.khaddem.entities.Universite;
 import tn.esprit.spring.khaddem.services.IUniversiteService;
@@ -12,10 +12,10 @@ import java.util.List;
 @Tag(name = "Gestion des universités")
 @RestController
 @RequestMapping("/universite")
-
+@AllArgsConstructor
 public class UniversiteRestController {
-    @Autowired
-    IUniversiteService universiteService;
+
+    private final IUniversiteService universiteService;
 
     // http://localhost:8089/Kaddem/universite/retrieve-all-universites
     @GetMapping("/retrieve-all-universites")

@@ -5,10 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tn.esprit.spring.khaddem.entities.*;
-import tn.esprit.spring.khaddem.repositories.ContratRepository;
-import tn.esprit.spring.khaddem.repositories.DepartementRepository;
-import tn.esprit.spring.khaddem.repositories.EquipeRepository;
-import tn.esprit.spring.khaddem.repositories.EtudiantRepository;
+import tn.esprit.spring.khaddem.repositories.*;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
@@ -18,16 +15,23 @@ import java.util.Optional;
 
 @Service
 @Slf4j
-@AllArgsConstructor
+
 public class EtudiantServiceImpl implements IEtudiantService{
 
-    EtudiantRepository etudiantRepository;
+    private final EtudiantRepository etudiantRepository;
 
-    DepartementRepository departementRepository;
+    private final DepartementRepository departementRepository;
 
-    ContratRepository contratRepository;
+    private final ContratRepository contratRepository;
 
-    EquipeRepository equipeRepository;
+    private final EquipeRepository equipeRepository;
+    public EtudiantServiceImpl (EtudiantRepository etudiantRepository,ContratRepository contratRepository,EquipeRepository equipeRepository, DepartementRepository departementRepository) {
+        this.etudiantRepository = etudiantRepository;
+        this.departementRepository = departementRepository;
+        this.contratRepository = contratRepository;
+        this.equipeRepository = equipeRepository;
+
+    }
     @Override
     public List<Etudiant> retrieveAllEtudiants() {
         return etudiantRepository.findAll();

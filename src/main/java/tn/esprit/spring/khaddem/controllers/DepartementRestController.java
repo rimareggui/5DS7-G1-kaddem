@@ -1,6 +1,6 @@
 package tn.esprit.spring.khaddem.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import tn.esprit.spring.khaddem.entities.Departement;
@@ -10,10 +10,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/departement")
-
+@AllArgsConstructor
 public class DepartementRestController {
-    @Autowired
-    IDepartementService departementService;
+
+    private final  IDepartementService departementService;
     // http://localhost:8089/Kaddem/departement/retrieve-all-departements
     @GetMapping("/retrieve-all-departements")
     @ResponseBody

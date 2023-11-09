@@ -1,27 +1,33 @@
 package tn.esprit.spring.khaddem.services;
 
-import lombok.AllArgsConstructor;
+
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
+
 import org.springframework.stereotype.Service;
 import tn.esprit.spring.khaddem.entities.Contrat;
 import tn.esprit.spring.khaddem.entities.Etudiant;
 import tn.esprit.spring.khaddem.entities.Specialite;
 import tn.esprit.spring.khaddem.repositories.ContratRepository;
+
 import tn.esprit.spring.khaddem.repositories.EtudiantRepository;
+
+
 import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
 
 @Service
 @Slf4j
-@AllArgsConstructor
+
 public class ContratServiceImpl implements  IContratService{
 
+ private final   ContratRepository contratRepository;
+ private final   EtudiantRepository etudiantRepository;
+    public ContratServiceImpl (ContratRepository contratRepository, EtudiantRepository etudiantRepository) {
+        this.contratRepository = contratRepository;
+        this.etudiantRepository = etudiantRepository;
+    }
 
-
-    ContratRepository contratRepository;
-    EtudiantRepository etudiantRepository;
 
     @Override
     public List<Contrat> retrieveAllContrats() {
@@ -125,7 +131,7 @@ public class ContratServiceImpl implements  IContratService{
         }
     }
     public float getChiffreAffaireEntreDeuxDates(Date startDate, Date endDate){
-        float differenceTime =  endDate.getTime() - startDate.getTime();
+        float differenceTime = (float) endDate.getTime() - startDate.getTime();
         float differenceDays = (differenceTime / (1000 * 60 * 60 * 24)) % 365;
         float differenceMonths =differenceDays/30;
         List<Contrat> contrats=contratRepository.findAll();
