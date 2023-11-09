@@ -1,8 +1,6 @@
 package tn.esprit.spring.khaddem;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -16,10 +14,9 @@ import tn.esprit.spring.khaddem.services.DepartementServiceImpl;
 
 
 import java.util.Optional;
-@ExtendWith(SpringExtension.class)
-@ExtendWith(MockitoExtension.class)
 @Slf4j
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
  class TestDepartmentService {
     @InjectMocks
     private DepartementServiceImpl departementService;

@@ -29,22 +29,9 @@ public class DepartementServiceImpl implements IDepartementService{
     }
 
     @Override
-    public Departement updateDepartement(Departement updatedDepartement) {
-        Optional<Departement> existingDepartement = departementRepository.findById(updatedDepartement.getIdDepartement());
-
-        if (existingDepartement.isPresent()) {
-            Departement departementToUpdate = existingDepartement.get();
-            // Perform necessary updates on the existing entity
-            departementToUpdate.setNomDepart(updatedDepartement.getNomDepart());
-            // Update other fields as needed
-
-            departementRepository.save(departementToUpdate);
-            return departementToUpdate;
-        } else {
-            // Handle the case when the entity is not found
-            // For instance, you can throw an exception or return null
-            return null;
-        }
+    public Departement updateDepartement(Departement d) {
+        departementRepository.save(d);
+        return d;
     }
 
 
